@@ -1,7 +1,17 @@
 package com.subtracker.backend
 
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
+
+@Entity
+@Table(name = "subscriptions")
 data class Subscription(
-    val id: Int,
-    val name: String,
-    val price: Double
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Int = 0,
+    val name: String = "",
+    val price: Double = 0.0,
 )
