@@ -1,34 +1,27 @@
 package com.subtracker.backend
 
 import org.springframework.stereotype.Service
+import java.util.Optional
 
 @Service
-class SubscriptionService {
-    private val subscriptions = mutableListOf(
-        Subscription(1, "iCloud", 50.0),
-        Subscription(2, "iCloud2", 50.0)
-    )
+class SubscriptionService(
+    private val subscriptionRepository: SubscriptionRepository,
+) {
 
-    fun getAll(): List<Subscription> = subscriptions
+    fun getAll(): List<Subscription> = subscriptionRepository.findAll()
 
-    fun getById(id: Int): Subscription? = subscriptions.find { it.id == id }
+    fun getById(id: Int): Subscription? = subscriptionRepository.findById(id).orElse(null)
 
     fun add(subscription: Subscription): Subscription {
-        subscriptions.add(subscription)
-        return subscription
+        return subscriptionRepository.save(subscription)
     }
 
-    fun update(
-        id: Int,
-        subscription: Subscription
-    ): Subscription? {
-        val index = subscriptions.indexOfFirst { it.id == id }
-        if (index == -1) return null
-        subscriptions[index] = subscription
-        return subscription
+    fun update(id: Int, subscription: Subscription): Subscription? {
+        if (!subscriptionRepository.existsById(id)) return null
+        return subscriptionRepository.save(subscription.copy(id = id))
     }
 
     fun delete(id: Int) {
-        subscriptions.removeIf { it.id == id }
+        subscriptionRepository.deleteById(id)
     }
 }
