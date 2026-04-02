@@ -1,8 +1,10 @@
 package com.subtracker.backend
 
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
@@ -16,4 +18,15 @@ class SubscriptionController(private val subscriptionService: SubscriptionServic
 
     @PostMapping("/subscriptions")
     fun addSubscription(@RequestBody subscription: Subscription): Subscription = subscriptionService.add(subscription)
+
+    @PutMapping("/subscriptions/{id}")
+    fun updateSubscription(
+        @PathVariable id: Int,
+        @RequestBody subscription: Subscription
+    ): Subscription? = subscriptionService.update(id, subscription)
+
+    @DeleteMapping("/subscriptions/{id}")
+    fun deleteSubscription(@PathVariable id: Int) {
+        subscriptionService.delete(id)
+    }
 }
