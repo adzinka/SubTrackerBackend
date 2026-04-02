@@ -17,4 +17,18 @@ class SubscriptionService {
         subscriptions.add(subscription)
         return subscription
     }
+
+    fun update(
+        id: Int,
+        subscription: Subscription
+    ): Subscription? {
+        val index = subscriptions.indexOfFirst { it.id == id }
+        if (index == -1) return null
+        subscriptions[index] = subscription
+        return subscription
+    }
+
+    fun delete(id: Int) {
+        subscriptions.removeIf { it.id == id }
+    }
 }
