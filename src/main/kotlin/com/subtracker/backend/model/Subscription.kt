@@ -1,11 +1,13 @@
 package com.subtracker.backend.model
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
@@ -25,5 +27,8 @@ data class Subscription(
     val reminderDays: Int? = null,
     @Enumerated(EnumType.STRING)
     val status: SubscriptionStatus = SubscriptionStatus.ACTIVE,
-    val notes: String? = null
+    val notes: String? = null,
+
+    @OneToMany(mappedBy = "subscription", cascade = [CascadeType.ALL])
+    val payments: List<Payment> = emptyList(),
 )
