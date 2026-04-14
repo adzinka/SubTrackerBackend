@@ -24,7 +24,7 @@ data class Payment (
 
     @ManyToOne
     @JoinColumn(name = "subscription_id")
-    val subscription: Subscription,
+    val subscription: Subscription? = null,
 )
 
 enum class PaymentStatus { PLANNED, PAID }
