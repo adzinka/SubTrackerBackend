@@ -1,7 +1,7 @@
 package com.subtracker.backend
 
+import com.subtracker.backend.model.Subscription
 import org.springframework.stereotype.Service
-import java.util.Optional
 
 @Service
 class SubscriptionService(

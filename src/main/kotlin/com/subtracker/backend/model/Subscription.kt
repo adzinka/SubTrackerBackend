@@ -1,4 +1,4 @@
-package com.subtracker.backend
+package com.subtracker.backend.model
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
