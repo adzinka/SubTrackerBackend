@@ -1,5 +1,6 @@
 package com.subtracker.backend.controller
 
+import com.subtracker.backend.dto.PaymentDto
 import com.subtracker.backend.model.Payment
 import com.subtracker.backend.model.Subscription
 import com.subtracker.backend.service.PaymentService
@@ -16,10 +17,10 @@ class PaymentController(
     private val paymentService: PaymentService
 ) {
     @GetMapping("/subscriptions/{subscriptionId}/payments")
-    fun getPaymentsBySubscriptionId(@PathVariable subscriptionId: Int) = paymentService.findBySubscriptionId(subscriptionId)
+    fun getPaymentsBySubscriptionId(@PathVariable subscriptionId: Int): List<PaymentDto> = paymentService.findBySubscriptionId(subscriptionId)
 
     @PostMapping("/subscriptions/{subscriptionId}/payments")
-    fun addPayment(@PathVariable subscriptionId: Int, @RequestBody payment: Payment): Payment? =
+    fun addPayment(@PathVariable subscriptionId: Int, @RequestBody payment: Payment): PaymentDto? =
         paymentService.add(subscriptionId, payment)
 
     @PutMapping("/subscriptions/{subscriptionId}/payments/{paymentId}")
@@ -27,7 +28,7 @@ class PaymentController(
         @PathVariable subscriptionId: Int,
         @PathVariable paymentId: Int,
         @RequestBody payment: Payment
-    ): Payment? = paymentService.update(subscriptionId, paymentId, payment)
+    ): PaymentDto? = paymentService.update(subscriptionId, paymentId, payment)
 
     @DeleteMapping("/subscriptions/{subscriptionId}/payments/{paymentId}")
     fun deletePayment(@PathVariable subscriptionId: Int, @PathVariable paymentId: Int) {
