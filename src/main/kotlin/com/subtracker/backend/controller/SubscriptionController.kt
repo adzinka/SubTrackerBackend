@@ -1,5 +1,6 @@
-package com.subtracker.backend
+package com.subtracker.backend.controller
 
+import com.subtracker.backend.service.SubscriptionService
 import com.subtracker.backend.model.Subscription
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
