@@ -1,5 +1,6 @@
 package com.subtracker.backend.controller
 
+import com.subtracker.backend.dto.SubscriptionDto
 import com.subtracker.backend.service.SubscriptionService
 import com.subtracker.backend.model.Subscription
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -13,19 +14,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class SubscriptionController(private val subscriptionService: SubscriptionService) {
     @GetMapping("/subscriptions")
-    fun getSubscriptions(): List<Subscription> = subscriptionService.getAll()
+    fun getSubscriptions(): List<SubscriptionDto> = subscriptionService.getAll()
 
     @GetMapping("/subscriptions/{id}")
-    fun getSubscriptionById(@PathVariable id: Int): Subscription? = subscriptionService.getById(id)
+    fun getSubscriptionById(@PathVariable id: Int): SubscriptionDto? = subscriptionService.getById(id)
 
     @PostMapping("/subscriptions")
-    fun addSubscription(@RequestBody subscription: Subscription): Subscription = subscriptionService.add(subscription)
+    fun addSubscription(@RequestBody subscription: Subscription): SubscriptionDto = subscriptionService.add(subscription)
 
     @PutMapping("/subscriptions/{id}")
     fun updateSubscription(
         @PathVariable id: Int,
         @RequestBody subscription: Subscription
-    ): Subscription? = subscriptionService.update(id, subscription)
+    ): SubscriptionDto? = subscriptionService.update(id, subscription)
 
     @DeleteMapping("/subscriptions/{id}")
     fun deleteSubscription(@PathVariable id: Int) {
