@@ -1,5 +1,6 @@
 package com.subtracker.backend.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -30,5 +31,6 @@ data class Subscription(
     val notes: String? = null,
 
     @OneToMany(mappedBy = "subscription", cascade = [CascadeType.ALL])
+    @JsonIgnore
     val payments: List<Payment> = emptyList(),
 )
