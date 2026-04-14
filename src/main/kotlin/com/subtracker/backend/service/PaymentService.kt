@@ -1,5 +1,7 @@
 package com.subtracker.backend.service
 
+import com.subtracker.backend.dto.PaymentDto
+import com.subtracker.backend.dto.toDto
 import com.subtracker.backend.model.Payment
 import com.subtracker.backend.model.Subscription
 import com.subtracker.backend.repository.PaymentRepository
@@ -11,16 +13,16 @@ class PaymentService(
     private val paymentRepository: PaymentRepository,
     private val subscriptionRepository: SubscriptionRepository
 ) {
-    fun findBySubscriptionId(subscriptionId: Int): List<Payment> = paymentRepository.findBySubscriptionId(subscriptionId)
+    fun findBySubscriptionId(subscriptionId: Int): List<PaymentDto> = paymentRepository.findBySubscriptionId(subscriptionId).map { it.toDto() }
 
-    fun add(subscriptionId: Int, payment: Payment): Payment? {
+    fun add(subscriptionId: Int, payment: Payment): PaymentDto? {
         val subscription = subscriptionRepository.findById(subscriptionId).orElse(null)
             ?: return null
 
-        return paymentRepository.save(payment.copy(subscription = subscription))
+        return paymentRepository.save(payment.copy(subscription = subscription)).toDto()
     }
 
-    fun update(subscriptionId: Int, paymentId: Int, payment: Payment): Payment? {
+    fun update(subscriptionId: Int, paymentId: Int, payment: Payment): PaymentDto? {
         val subscription = subscriptionRepository.findById(subscriptionId).orElse(null) ?: return null
         val existingPayment = paymentRepository.findById(paymentId).orElse(null) ?: return null
         return paymentRepository.save(existingPayment.copy(
@@ -28,7 +30,7 @@ class PaymentService(
             amount = payment.amount,
             date = payment.date,
             status = payment.status
-        ))
+        )).toDto()
     }
 
     fun delete(paymentId: Int) {
