@@ -51,12 +51,7 @@ Controller → Service → Repository
 ### 1. Start PostgreSQL
 
 ```bash
-docker run --name subtracker-db \
-  -e POSTGRES_DB=subtracker \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres \
-  -p 5432:5432 \
-  -d postgres:17
+docker compose up -d
 ```
 
 ### 2. Run the app
@@ -65,7 +60,21 @@ docker run --name subtracker-db \
 ./gradlew bootRun
 ```
 
-The API will be available at `http://localhost:8080`.
+The API will be available at `http://localhost:8081`.
+From an Android emulator the host machine is `10.0.2.2`, so the API is `http://10.0.2.2:8081`.
+
+### Configuration
+
+Settings are read from the environment; the values in `application.properties` are local-development defaults.
+
+| Variable | Default |
+|---|---|
+| `SERVER_PORT` | `8081` |
+| `SPRING_DATASOURCE_URL` | `jdbc:postgresql://localhost:5432/subtracker` |
+| `SPRING_DATASOURCE_USERNAME` | `postgres` |
+| `SPRING_DATASOURCE_PASSWORD` | `postgres` |
+
+Never commit real credentials — use environment variables or a local `.env` file (git-ignored).
 
 ## Related
 
